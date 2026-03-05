@@ -2,6 +2,8 @@ name: Build and Publish
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
@@ -20,6 +22,44 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate version
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=$(echo $GITHUB_REF_NAME | sed 's/^v//')
+          else
+            # Get last tag
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+            # Count commits since last tag
+            COMMIT_COUNT=$(git rev-list --count $LAST_TAG..HEAD)
+            # Get short commit hash
+            COMMIT_SHA=$(git rev-parse --short HEAD)
+            # Generate version: last-tag.commit-count.githash
+            VERSION="${LAST_TAG#v}.${COMMIT_COUNT}+${COMMIT_SHA}"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Create and push tag for main branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Check if tag already exists
+          if ! git rev-parse "v${{ steps.version.outputs.VERSION }}" >/dev/null 2>&1; then
+            git tag "v${{ steps.version.outputs.VERSION }}"
+            git push origin "v${{ steps.version.outputs.VERSION }}"
+            echo "Created and pushed tag v${{ steps.version.outputs.VERSION }}"
+          else
+            echo "Tag v${{ steps.version.outputs.VERSION }} already exists"
+          fi
 
       - name: Log in to Container Registry
         uses: docker/login-action@v3
@@ -34,7 +74,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=tag
+            type=raw,value=v${{ steps.version.outputs.VERSION }}
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
@@ -50,6 +90,11 @@ jobs:
         with:
           version: 'v3.13.0'
 
+      - name: Update Chart.yaml version
+        run: |
+          sed -i "s/^version: .*/version: \"${{ steps.version.outputs.VERSION }}\"/" helm/foodbanks-web/Chart.yaml
+          sed -i "s/^appVersion: .*/appVersion: \"${{ steps.version.outputs.VERSION }}\"/" helm/foodbanks-web/Chart.yaml
+
       - name: Package Helm chart
         run: |
           helm package helm/foodbanks-web
@@ -60,5 +105,4 @@ jobs:
 
       - name: Push Helm chart
         run: |
-          CHART_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
           helm push foodbanks-web-*.tgz oci://${{ env.REGISTRY }}/foodbanks
