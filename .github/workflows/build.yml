@@ -99,7 +99,40 @@ jobs:
         run: |
           helm package helm/foodbanks-web
 
-      - name: Log in to GitHub Container Registry (Helm)
+      - name: Update deploy-stock versions
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Clone deploy-stock repo
+          git clone https://github.com/foodbanks/deploy-stock.git
+          cd deploy-stock
+          
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Update foodbanks-web version using yq or python
+          python3 << EOF
+          import yaml
+          
+          with open('versions.yaml', 'r') as f:
+              data = yaml.safe_load(f)
+          
+          data['foodbanks-web'] = {
+              'image': {
+                  'tag': "${{ steps.version.outputs.VERSION }}"
+              }
+          }
+          
+          with open('versions.yaml', 'w') as f:
+              yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+          EOF
+          
+          # Commit and push
+          git add versions.yaml
+          git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}" || exit 0
+          git push https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git main
+
+      - name: Log in to Container Registry (Helm)
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
 
