@@ -93,22 +93,24 @@ jobs:
         run: |
           helm package helm/foodbanks-web
 
+      - name: Checkout deploy-stock repo
+        if: github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+        with:
+          repository: foodbanks/deploy-stock
+          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          path: deploy-stock
+
       - name: Update deploy-stock versions
         if: github.ref == 'refs/heads/main'
         run: |
-          # Check if DEPLOY_REPO_TOKEN is available
-          if [[ -z "${{ secrets.DEPLOY_REPO_TOKEN }}" ]]; then
-            echo "DEPLOY_REPO_TOKEN not configured, skipping deploy-stock update"
+          # Check if we successfully checked out deploy-stock
+          if [[ ! -d "deploy-stock" ]]; then
+            echo "DEPLOY_REPO_TOKEN not configured or checkout failed, skipping deploy-stock update"
             exit 0
           fi
           
-          # Clone deploy-stock repo with authentication
-          git clone https://${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/foodbanks/deploy-stock.git
           cd deploy-stock
-          
-          # Configure git
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           
           # Update foodbanks-web version using yq or python
           python3 << EOF
@@ -126,6 +128,10 @@ jobs:
           with open('versions.yaml', 'w') as f:
               yaml.dump(data, f, default_flow_style=False, sort_keys=False)
           EOF
+          
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           
           # Commit and push
           git add versions.yaml
