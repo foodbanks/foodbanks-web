@@ -136,7 +136,7 @@ jobs:
           # Commit and push
           git add versions.yaml
           git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}"
-          git push origin main
+          git push origin sandbox
 
       - name: Log in to GitHub Container Registry (Helm)
         run: |
