@@ -1,0 +1,17 @@
+apiVersion: v2
+name: foodbanks-web
+description: A Helm chart for deploying a redirect page from dev to demo environment
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - redirect
+  - web
+  - static
+  - nginx
+home: https://github.com/foodbanks/foodbanks-web
+sources:
+  - https://github.com/foodbanks/foodbanks-web
+maintainers:
+  - name: Foodbanks IT Team
+    email: it@foodbanksit.be

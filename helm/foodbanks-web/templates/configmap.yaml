@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "foodbanks-web.fullname" . }}
+  labels:
+    {{- include "foodbanks-web.labels" . | nindent 4 }}
+data:
+  index.html: |
+{{ .Files.Get "index.html" | indent 4 }}

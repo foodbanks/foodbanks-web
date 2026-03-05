@@ -1,0 +1,5 @@
+Your redirect page has been deployed.
+
+The page is accessible at: https://dev.stock.foodbanksit.be
+
+It will redirect users to: https://demo.stock.foodbanksit.be
