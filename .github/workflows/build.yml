@@ -41,17 +41,15 @@ jobs:
             LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
             if [[ -z "$LAST_TAG" ]]; then
               # No tags yet, start with 0.1.0
-              LAST_TAG="0.1.0"
-              COMMIT_COUNT=$(git rev-list --count HEAD)
-              COMMIT_SHA=$(git rev-parse --short HEAD)
-              VERSION="${LAST_TAG}.${COMMIT_COUNT}+${COMMIT_SHA}"
+              VERSION="0.1.0"
             else
-              # Count commits since last tag
-              COMMIT_COUNT=$(git rev-list --count $LAST_TAG..HEAD)
-              # Get short commit hash
-              COMMIT_SHA=$(git rev-parse --short HEAD)
-              # Generate version: last-tag.commit-count.githash
-              VERSION="${LAST_TAG#v}.${COMMIT_COUNT}+${COMMIT_SHA}"
+              # Extract version parts and increment patch
+              IFS='.' read -ra PARTS <<< "${LAST_TAG#v}"
+              MAJOR=${PARTS[0]}
+              MINOR=${PARTS[1]}
+              PATCH=${PARTS[2]}
+              PATCH=$((PATCH + 1))
+              VERSION="$MAJOR.$MINOR.$PATCH"
             fi
           fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
@@ -88,10 +86,7 @@ jobs:
 
       - name: Update Chart.yaml version
         run: |
-          # Use semantic version without + for Helm chart
-          CHART_VERSION="${{ steps.version.outputs.VERSION }}"
-          CHART_VERSION="${CHART_VERSION%%+*}"
-          sed -i "s/^version: .*/version: \"${CHART_VERSION}\"/" helm/foodbanks-web/Chart.yaml
+          sed -i "s/^version: .*/version: \"${{ steps.version.outputs.VERSION }}\"/" helm/foodbanks-web/Chart.yaml
           sed -i "s/^appVersion: .*/appVersion: \"${{ steps.version.outputs.VERSION }}\"/" helm/foodbanks-web/Chart.yaml
 
       - name: Package Helm chart
