@@ -120,6 +120,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            align-items: stretch;
             flex-wrap: wrap;
         }
         
@@ -132,6 +133,8 @@
             border-radius: 15px;
             border: 1px solid #e2e8f0;
             text-align: center;
+            display: flex;
+            flex-direction: column;
         }
         
         .env-subblock h3 {
@@ -230,6 +233,14 @@
             
             .subtitle {
                 font-size: 1rem;
+            }
+            
+            .environments-row {
+                flex-direction: column;
+            }
+            
+            .env-subblock {
+                max-width: none;
             }
         }
     </style>
