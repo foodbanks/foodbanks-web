@@ -105,6 +105,15 @@ jobs:
             echo "Tag v${{ steps.version.outputs.VERSION }} already exists"
           fi
 
+      - name: Log in to GitHub Container Registry (Helm)
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
+
+      - name: Push Helm chart
+        run: |
+          CHART_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
+          helm push foodbanks-web-*.tgz oci://${{ env.REGISTRY }}/foodbanks
+
       - name: Checkout deploy-stock repo
         if: github.ref == 'refs/heads/main'
         uses: actions/checkout@v4
@@ -163,12 +172,3 @@ jobs:
           git add versions-foodbanks-web.yaml
           git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}"
           git push origin sandbox
-
-      - name: Log in to GitHub Container Registry (Helm)
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
-
-      - name: Push Helm chart
-        run: |
-          CHART_VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
-          helm push foodbanks-web-*.tgz oci://${{ env.REGISTRY }}/foodbanks
