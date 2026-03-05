@@ -96,14 +96,14 @@ jobs:
       - name: Update deploy-stock versions
         if: github.ref == 'refs/heads/main'
         run: |
-          # Check if DEPLOY_STOCK_TOKEN is available
-          if [[ -z "${{ secrets.DEPLOY_STOCK_TOKEN }}" ]]; then
-            echo "DEPLOY_STOCK_TOKEN not configured, skipping deploy-stock update"
+          # Check if DEPLOY_REPO_TOKEN is available
+          if [[ -z "${{ secrets.DEPLOY_REPO_TOKEN }}" ]]; then
+            echo "DEPLOY_REPO_TOKEN not configured, skipping deploy-stock update"
             exit 0
           fi
           
           # Clone deploy-stock repo with authentication
-          git clone https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git
+          git clone https://${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/foodbanks/deploy-stock.git
           cd deploy-stock
           
           # Configure git
