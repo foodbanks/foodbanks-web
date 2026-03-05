@@ -6,7 +6,7 @@ ingress:
   enabled: true
   className: "gce"
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "static-ip-foodbanks-dev"
+    kubernetes.io/ingress.global-static-ip-name: "static-ip-foodbanks-demo"
     networking.gke.io/managed-certificates: "foodbanksit.be-managed-cert"
   hosts:
     - host: dev.stock.foodbanksit.be
