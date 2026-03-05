@@ -38,13 +38,21 @@ jobs:
             VERSION=$(echo $GITHUB_REF_NAME | sed 's/^v//')
           else
             # Get last tag
-            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
-            # Count commits since last tag
-            COMMIT_COUNT=$(git rev-list --count $LAST_TAG..HEAD)
-            # Get short commit hash
-            COMMIT_SHA=$(git rev-parse --short HEAD)
-            # Generate version: last-tag.commit-count.githash
-            VERSION="${LAST_TAG#v}.${COMMIT_COUNT}+${COMMIT_SHA}"
+            LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            if [[ -z "$LAST_TAG" ]]; then
+              # No tags yet, start with 0.1.0
+              LAST_TAG="0.1.0"
+              COMMIT_COUNT=$(git rev-list --count HEAD)
+              COMMIT_SHA=$(git rev-parse --short HEAD)
+              VERSION="${LAST_TAG}.${COMMIT_COUNT}+${COMMIT_SHA}"
+            else
+              # Count commits since last tag
+              COMMIT_COUNT=$(git rev-list --count $LAST_TAG..HEAD)
+              # Get short commit hash
+              COMMIT_SHA=$(git rev-parse --short HEAD)
+              # Generate version: last-tag.commit-count.githash
+              VERSION="${LAST_TAG#v}.${COMMIT_COUNT}+${COMMIT_SHA}"
+            fi
           fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Generated version: $VERSION"
