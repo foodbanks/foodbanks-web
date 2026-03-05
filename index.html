@@ -101,6 +101,86 @@
             margin-bottom: 2rem;
         }
         
+        .language-row {
+            margin-bottom: 2rem;
+        }
+        
+        .language-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .language-header h2 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin: 0;
+        }
+        
+        .environments-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .env-subblock {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .env-subblock h3 {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        
+        .env-subblock p {
+            font-size: 1rem;
+            color: #718096;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .acceptance-env {
+            background: #fff5f5;
+            border-color: #fed7d7;
+        }
+        
+        .acceptance-btn {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            box-shadow: 0 4px 15px rgba(252, 129, 129, 0.4);
+        }
+        
+        .acceptance-btn:hover {
+            box-shadow: 0 6px 20px rgba(252, 129, 129, 0.5);
+        }
+        
+        .info-section {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .info-block {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 10px;
+            color: #4a5568;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
         .language-section {
             margin-bottom: 2rem;
             padding: 1.5rem;
@@ -161,70 +241,89 @@
         </div>
         <h1>Stock Management System</h1>
         
-        <!-- Demo Environment Block -->
-        <div class="environment-block">
-            <div class="language-section">
+        <!-- Dutch Language Row -->
+        <div class="language-row">
+            <div class="language-header">
                 <h2>Nederlands</h2>
-                <p class="subtitle">
-                    De ontwikkelomgeving is verplaatst.<br>
-                    Klik op de knop hieronder om onze demo-omgeving te bezoeken.
-                </p>
-                <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
-                    Ga naar Demo Omgeving
-                </a>
             </div>
             
-            <div class="language-section">
-                <h2>Français</h2>
-                <p class="subtitle">
-                    L'environnement de développement a été déplacé.<br>
-                    Veuillez cliquer sur le bouton ci-dessous pour visiter notre environnement de démonstration.
-                </p>
-                <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
-                    Aller à l'Environnement de Démo
-                </a>
-            </div>
-        </div>
-        
-        <div class="info">
-            <strong>Development → Demo Migration</strong><br>
-            Development activities now use the demo environment.
-            <div class="environment">DEMO ENVIRONMENT</div>
-            <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #718096;">
-                Unmigrated users → demo
-            </div>
-        </div>
-        
-        <!-- Acceptance Environment Block -->
-        <div class="info" style="margin-top: 2rem; background: #fff5f5;">
-            <strong>For Migrated Users</strong><br>
-            Please visit the acceptance environment for continued access.
-            <div class="environment" style="background: #fed7d7; color: #c53030;">ACCEPTANCE ENVIRONMENT</div>
-            <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #c53030;">
-                Migrated users → acceptance
-            </div>
-            
-            <div class="environment-block" style="margin-top: 1.5rem;">
-                <div class="language-section">
-                    <h2>Nederlands</h2>
-                    <p class="subtitle">
-                        Voor gemigreerde gebruikers.<br>
-                        Bezoek de acceptatieomgeving voor voortgezette toegang.
+            <div class="environments-row">
+                <!-- Demo Environment -->
+                <div class="env-subblock demo-env">
+                    <h3>Demo Omgeving</h3>
+                    <p>
+                        De ontwikkelomgeving is verplaatst.<br>
+                        Bezoek onze demo-omgeving.
                     </p>
-                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
-                        Ga naar Acceptatie Omgeving
+                    <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
+                        Ga naar Demo
                     </a>
                 </div>
                 
-                <div class="language-section">
-                    <h2>Français</h2>
-                    <p class="subtitle">
-                        Pour les utilisateurs migrés.<br>
-                        Veuillez visiter l'environnement d'acceptation pour un accès continu.
+                <!-- Acceptance Environment -->
+                <div class="env-subblock acceptance-env">
+                    <h3>Acceptatie Omgeving</h3>
+                    <p>
+                        Voor gemigreerde gebruikers.<br>
+                        Bezoek de acceptatieomgeving.
                     </p>
-                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
-                        Aller à l'Environnement d'Acceptation
+                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button acceptance-btn">
+                        Ga naar Acceptatie
                     </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- French Language Row -->
+        <div class="language-row">
+            <div class="language-header">
+                <h2>Français</h2>
+            </div>
+            
+            <div class="environments-row">
+                <!-- Demo Environment -->
+                <div class="env-subblock demo-env">
+                    <h3>Environnement de Démo</h3>
+                    <p>
+                        L'environnement de développement a été déplacé.<br>
+                        Visitez notre environnement de démonstration.
+                    </p>
+                    <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
+                        Aller à la Démo
+                    </a>
+                </div>
+                
+                <!-- Acceptance Environment -->
+                <div class="env-subblock acceptance-env">
+                    <h3>Environnement d'Acceptation</h3>
+                    <p>
+                        Pour les utilisateurs migrés.<br>
+                        Visitez l'environnement d'acceptation.
+                    </p>
+                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button acceptance-btn">
+                        Aller à l'Acceptation
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-block">
+                <strong>Development → Demo Migration</strong><br>
+                Development activities now use the demo environment.
+                <div class="environment">DEMO ENVIRONMENT</div>
+                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #718096;">
+                    Unmigrated users → demo
+                </div>
+            </div>
+            
+            <div class="info-block" style="background: #fff5f5;">
+                <strong>For Migrated Users</strong><br>
+                Please visit the acceptance environment for continued access.
+                <div class="environment" style="background: #fed7d7; color: #c53030;">ACCEPTANCE ENVIRONMENT</div>
+                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #c53030;">
+                    Migrated users → acceptance
                 </div>
             </div>
         </div>
