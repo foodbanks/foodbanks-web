@@ -139,6 +139,18 @@ jobs:
           git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}"
           git push origin sandbox
 
+      - name: Create and push tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Check if tag already exists
+          if ! git rev-parse "v${{ steps.version.outputs.VERSION }}" >/dev/null 2>&1; then
+            git tag "v${{ steps.version.outputs.VERSION }}"
+            git push https://${{ secrets.GITHUB_TOKEN }}@github.com/foodbanks/foodbanks-web.git "v${{ steps.version.outputs.VERSION }}"
+            echo "Created and pushed tag v${{ steps.version.outputs.VERSION }}"
+          else
+            echo "Tag v${{ steps.version.outputs.VERSION }} already exists"
+          fi
+
       - name: Log in to GitHub Container Registry (Helm)
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
