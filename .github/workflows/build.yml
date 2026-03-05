@@ -125,29 +125,42 @@ jobs:
           
           cd deploy-stock
           
-          # Update foodbanks-web version using yq or python
+          # Update versions-foodbanks-web.yaml with both chart and image versions
           python3 << EOF
           import yaml
           
-          with open('versions.yaml', 'r') as f:
-              data = yaml.safe_load(f)
+          # Read the file or create it if it doesn't exist
+          try:
+              with open('versions-foodbanks-web.yaml', 'r') as f:
+                  data = yaml.safe_load(f) or {}
+          except FileNotFoundError:
+              data = {}
           
-          data['foodbanks-web'] = {
-              'image': {
-                  'tag': "${{ steps.version.outputs.VERSION }}"
-              }
-          }
+          # Update chart version
+          if 'chart' not in data:
+              data['chart'] = {}
+          data['chart']['version'] = "${{ steps.version.outputs.VERSION }}"
           
-          with open('versions.yaml', 'w') as f:
+          # Update image version
+          if 'foodbanks-web' not in data:
+              data['foodbanks-web'] = {}
+          if 'image' not in data['foodbanks-web']:
+              data['foodbanks-web']['image'] = {}
+          data['foodbanks-web']['image']['tag'] = "${{ steps.version.outputs.VERSION }}"
+          
+          with open('versions-foodbanks-web.yaml', 'w') as f:
               yaml.dump(data, f, default_flow_style=False, sort_keys=False)
           EOF
+          
+          echo "Updated versions-foodbanks-web.yaml:"
+          cat versions-foodbanks-web.yaml
           
           # Configure git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
           # Commit and push
-          git add versions.yaml
+          git add versions-foodbanks-web.yaml
           git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}"
           git push origin sandbox
 
