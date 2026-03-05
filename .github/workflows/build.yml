@@ -95,10 +95,15 @@ jobs:
 
       - name: Update deploy-stock versions
         if: github.ref == 'refs/heads/main'
-        continue-on-error: true
         run: |
-          # Clone deploy-stock repo
-          git clone https://github.com/foodbanks/deploy-stock.git || { echo "Failed to clone deploy-stock repo"; exit 0; }
+          # Check if DEPLOY_STOCK_TOKEN is available
+          if [[ -z "${{ secrets.DEPLOY_STOCK_TOKEN }}" ]]; then
+            echo "DEPLOY_STOCK_TOKEN not configured, skipping deploy-stock update"
+            exit 0
+          fi
+          
+          # Clone deploy-stock repo with authentication
+          git clone https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git
           cd deploy-stock
           
           # Configure git
@@ -124,8 +129,8 @@ jobs:
           
           # Commit and push
           git add versions.yaml
-          git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}" || exit 0
-          git push https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git main || echo "Deploy-stock update failed - DEPLOY_STOCK_TOKEN might not be configured"
+          git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}"
+          git push origin main
 
       - name: Log in to GitHub Container Registry (Helm)
         run: |
