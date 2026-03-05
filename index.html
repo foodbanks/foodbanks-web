@@ -116,81 +116,38 @@
             margin: 0;
         }
         
-        .headers-row {
+        .environments-row {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .env-subblock {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .env-subblock h3 {
+            font-size: 1.2rem;
+            color: #2d3748;
             margin-bottom: 1rem;
         }
         
-        .header-block {
-            flex: 1;
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        .header-block h2 {
-            font-size: 1.5rem;
-            color: #2d3748;
-            margin: 0;
-        }
-        
-        .environments-main-row {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .env-column {
-            flex: 1;
-            max-width: 400px;
-        }
-        
-        .env-header {
-            text-align: center;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 15px 15px 0 0;
-            border: 1px solid #e2e8f0;
-            border-bottom: none;
-        }
-        
-        .env-header h3 {
-            font-size: 1.3rem;
-            color: #2d3748;
-            margin: 0;
-        }
-        
-        .acceptance-header {
-            background: #fff5f5;
-            border-color: #fed7d7;
-        }
-        
-        .env-content {
-            padding: 1.5rem;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-top: none;
-            text-align: center;
-        }
-        
-        .env-content:not(:last-child) {
-            border-bottom: none;
-        }
-        
-        .env-content:last-child {
-            border-radius: 0 0 15px 15px;
-        }
-        
-        .env-content p {
+        .env-subblock p {
             font-size: 1rem;
             color: #718096;
             line-height: 1.5;
             margin-bottom: 1.5rem;
         }
         
-        .acceptance-content {
+        .acceptance-env {
             background: #fff5f5;
             border-color: #fed7d7;
         }
@@ -284,26 +241,16 @@
         </div>
         <h1>Stock Management System</h1>
         
-        <!-- Language Headers Row -->
-        <div class="headers-row">
-            <div class="header-block">
+        <!-- Dutch Language Row -->
+        <div class="language-row">
+            <div class="language-header">
                 <h2>Nederlands</h2>
             </div>
-            <div class="header-block">
-                <h2>Français</h2>
-            </div>
-        </div>
-        
-        <!-- Demo/Acceptance Blocks Row -->
-        <div class="environments-main-row">
-            <!-- Demo Column -->
-            <div class="env-column">
-                <div class="env-header">
-                    <h3>Demo / Démo</h3>
-                </div>
-                
-                <!-- Dutch Demo -->
-                <div class="env-content">
+            
+            <div class="environments-row">
+                <!-- Demo Environment -->
+                <div class="env-subblock demo-env">
+                    <h3>Demo Omgeving</h3>
                     <p>
                         De ontwikkelomgeving is verplaatst.<br>
                         Bezoek onze demo-omgeving.
@@ -313,26 +260,9 @@
                     </a>
                 </div>
                 
-                <!-- French Demo -->
-                <div class="env-content">
-                    <p>
-                        L'environnement de développement a été déplacé.<br>
-                        Visitez notre environnement de démonstration.
-                    </p>
-                    <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
-                        Aller à la Démo
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Acceptance Column -->
-            <div class="env-column">
-                <div class="env-header acceptance-header">
-                    <h3>Acceptatie / Acceptation</h3>
-                </div>
-                
-                <!-- Dutch Acceptance -->
-                <div class="env-content acceptance-content">
+                <!-- Acceptance Environment -->
+                <div class="env-subblock acceptance-env">
+                    <h3>Acceptatie Omgeving</h3>
                     <p>
                         Voor gemigreerde gebruikers.<br>
                         Bezoek de acceptatieomgeving.
@@ -341,9 +271,31 @@
                         Ga naar Acceptatie
                     </a>
                 </div>
+            </div>
+        </div>
+        
+        <!-- French Language Row -->
+        <div class="language-row">
+            <div class="language-header">
+                <h2>Français</h2>
+            </div>
+            
+            <div class="environments-row">
+                <!-- Demo Environment -->
+                <div class="env-subblock demo-env">
+                    <h3>Environnement de Démo</h3>
+                    <p>
+                        L'environnement de développement a été déplacé.<br>
+                        Visitez notre environnement de démonstration.
+                    </p>
+                    <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
+                        Aller à la Démo
+                    </a>
+                </div>
                 
-                <!-- French Acceptance -->
-                <div class="env-content acceptance-content">
+                <!-- Acceptance Environment -->
+                <div class="env-subblock acceptance-env">
+                    <h3>Environnement d'Acceptation</h3>
                     <p>
                         Pour les utilisateurs migrés.<br>
                         Visitez l'environnement d'acceptation.
