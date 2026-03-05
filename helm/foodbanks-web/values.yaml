@@ -4,9 +4,10 @@ image:
 
 ingress:
   enabled: true
+  className: "gce"
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.global-static-ip-name: "static-ip-foodbanks-demo"
+    networking.gke.io/managed-certificates: "foodbanksit.be-managed-cert"
   hosts:
     - host: dev.stock.foodbanksit.be
       paths:
