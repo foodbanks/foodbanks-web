@@ -100,6 +100,7 @@ jobs:
           repository: foodbanks/deploy-stock
           token: ${{ secrets.DEPLOY_REPO_TOKEN }}
           path: deploy-stock
+          ref: sandbox
 
       - name: Update deploy-stock versions
         if: github.ref == 'refs/heads/main'
