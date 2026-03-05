@@ -124,7 +124,7 @@ jobs:
           # Commit and push
           git add versions.yaml
           git commit -m "Update foodbanks-web to version ${{ steps.version.outputs.VERSION }}" || exit 0
-          git push https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git main
+          git push https://${{ secrets.DEPLOY_STOCK_TOKEN }}@github.com/foodbanks/deploy-stock.git main || echo "Deploy-stock update failed - DEPLOY_STOCK_TOKEN might not be configured"
 
       - name: Log in to GitHub Container Registry (Helm)
         run: |
