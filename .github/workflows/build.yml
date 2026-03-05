@@ -95,9 +95,10 @@ jobs:
 
       - name: Update deploy-stock versions
         if: github.ref == 'refs/heads/main'
+        continue-on-error: true
         run: |
           # Clone deploy-stock repo
-          git clone https://github.com/foodbanks/deploy-stock.git
+          git clone https://github.com/foodbanks/deploy-stock.git || { echo "Failed to clone deploy-stock repo"; exit 0; }
           cd deploy-stock
           
           # Configure git
