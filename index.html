@@ -97,6 +97,24 @@
             margin-top: 1rem;
         }
         
+        .environment-block {
+            margin-bottom: 2rem;
+        }
+        
+        .language-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .language-section h2 {
+            font-size: 1.3rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        
         .translations {
             margin-top: 2rem;
             border-top: 1px solid #e2e8f0;
@@ -142,13 +160,32 @@
             📦
         </div>
         <h1>Stock Management System</h1>
-        <p class="subtitle">
-            The development environment has been moved.<br>
-            Please click the button below to visit our demo environment.
-        </p>
-        <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
-            Go to Demo Environment
-        </a>
+        
+        <!-- Demo Environment Block -->
+        <div class="environment-block">
+            <div class="language-section">
+                <h2>Nederlands</h2>
+                <p class="subtitle">
+                    De ontwikkelomgeving is verplaatst.<br>
+                    Klik op de knop hieronder om onze demo-omgeving te bezoeken.
+                </p>
+                <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
+                    Ga naar Demo Omgeving
+                </a>
+            </div>
+            
+            <div class="language-section">
+                <h2>Français</h2>
+                <p class="subtitle">
+                    L'environnement de développement a été déplacé.<br>
+                    Veuillez cliquer sur le bouton ci-dessous pour visiter notre environnement de démonstration.
+                </p>
+                <a href="https://demo.stock.foodbanksit.be" class="redirect-button">
+                    Aller à l'Environnement de Démo
+                </a>
+            </div>
+        </div>
+        
         <div class="info">
             <strong>Development → Demo Migration</strong><br>
             Development activities now use the demo environment.
@@ -158,53 +195,37 @@
             </div>
         </div>
         
-        <div class="info" style="margin-top: 1rem; background: #fff5f5;">
+        <!-- Acceptance Environment Block -->
+        <div class="info" style="margin-top: 2rem; background: #fff5f5;">
             <strong>For Migrated Users</strong><br>
             Please visit the acceptance environment for continued access.
             <div class="environment" style="background: #fed7d7; color: #c53030;">ACCEPTANCE ENVIRONMENT</div>
             <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #c53030;">
                 Migrated users → acceptance
             </div>
-            <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%); margin-top: 0.5rem;">
-                Go to Acceptance Environment
-            </a>
-        </div>
-        
-        <div class="translations">
-            <div class="translation-section">
-                <h3>Nederlands</h3>
-                <p>
-                    De ontwikkelomgeving is verplaatst.<br>
-                    Klik op de knop hieronder om onze demo-omgeving te bezoeken.
-                </p>
-                <p style="margin-top: 1rem;">
-                    <strong>Voor Gemigreerde Gebruikers</strong><br>
-                    Bezoek de acceptatieomgeving voor voortgezette toegang.
-                </p>
-            </div>
             
-            <div class="translation-section">
-                <h3>Français</h3>
-                <p>
-                    L'environnement de développement a été déplacé.<br>
-                    Veuillez cliquer sur le bouton ci-dessous pour visiter notre environnement de démonstration.
-                </p>
-                <p style="margin-top: 1rem;">
-                    <strong>Pour les Utilisateurs Migrés</strong><br>
-                    Veuillez visiter l'environnement d'acceptation pour un accès continu.
-                </p>
-            </div>
-            
-            <div class="translation-section">
-                <h3>English</h3>
-                <p>
-                    The development environment has been moved.<br>
-                    Please click the button below to visit our demo environment.
-                </p>
-                <p style="margin-top: 1rem;">
-                    <strong>For Migrated Users</strong><br>
-                    Please visit the acceptance environment for continued access.
-                </p>
+            <div class="environment-block" style="margin-top: 1.5rem;">
+                <div class="language-section">
+                    <h2>Nederlands</h2>
+                    <p class="subtitle">
+                        Voor gemigreerde gebruikers.<br>
+                        Bezoek de acceptatieomgeving voor voortgezette toegang.
+                    </p>
+                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
+                        Ga naar Acceptatie Omgeving
+                    </a>
+                </div>
+                
+                <div class="language-section">
+                    <h2>Français</h2>
+                    <p class="subtitle">
+                        Pour les utilisateurs migrés.<br>
+                        Veuillez visiter l'environnement d'acceptation pour un accès continu.
+                    </p>
+                    <a href="https://acceptance.stock.foodbanksit.be" class="redirect-button" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
+                        Aller à l'Environnement d'Acceptation
+                    </a>
+                </div>
             </div>
         </div>
     </div>
