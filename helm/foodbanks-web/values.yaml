@@ -1,16 +1,6 @@
-replicaCount: 1
-
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  tag: "alpine"
-
-nameOverride: ""
-fullnameOverride: ""
-
-service:
-  type: ClusterIP
-  port: 80
+  repository: ghcr.io/foodbanks/foodbanks-web
+  tag: latest
 
 ingress:
   enabled: true
@@ -30,17 +20,7 @@ ingress:
 
 resources:
   limits:
-    cpu: 100m
     memory: 128Mi
   requests:
     cpu: 50m
     memory: 64Mi
-
-autoscaling:
-  enabled: false
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}

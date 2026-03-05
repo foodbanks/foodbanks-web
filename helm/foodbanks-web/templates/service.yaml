@@ -1,15 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "foodbanks-web.fullname" . }}
+  name: foodbanks-web
   labels:
-    {{- include "foodbanks-web.labels" . | nindent 4 }}
+    app: foodbanks-web
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/health-check: '{"protocol": "HTTP", "port": 80, "requestPath": "/"}'
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 80
+      targetPort: 80
       protocol: TCP
       name: http
   selector:
-    {{- include "foodbanks-web.selectorLabels" . | nindent 4 }}
+    app: foodbanks-web

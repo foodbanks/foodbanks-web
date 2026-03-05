@@ -78,25 +78,6 @@ ingress:
 - **Ingress**: NGINX Ingress Controller with SSL
 - **Certificate**: Managed by cert-manager
 
-## Repository Structure
-
-```
-foodbanks-web/
-├── index.html                 # The redirect page
-├── README.md                  # This file
-└── helm/
-    └── foodbanks-web/
-        ├── Chart.yaml         # Helm chart metadata
-        ├── values.yaml        # Default configuration values
-        └── templates/
-            ├── configmap.yaml # Serves the HTML content
-            ├── deployment.yaml # Kubernetes deployment
-            ├── ingress.yaml   # Ingress configuration
-            ├── service.yaml   # Service configuration
-            ├── _helpers.tpl   # Helm template helpers
-            └── NOTES.txt      # Installation notes
-```
-
 ## Support
 
 For questions or issues, please contact the Foodbanks IT Team at it@foodbanksit.be
